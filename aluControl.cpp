@@ -1,12 +1,9 @@
-#include <string>
-#include <iostream>
 #include "aluControl.hpp"
-#include "machine.hpp"
 
-using namespace std;
-
+// Construtor padrão da classe
 ALUControl::ALUControl() = default;
 
+// Define o código da operação a partir da instrução e do ALUOp
 void ALUControl::executa(int instrucao, int aluop) {
 	switch(aluop){
 		case 0:
@@ -39,6 +36,7 @@ void ALUControl::executa(int instrucao, int aluop) {
 		
 }
 
+// Retorna o valor de output
 int ALUControl::getOutput(){
   return output;
 }

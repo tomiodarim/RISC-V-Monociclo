@@ -1,28 +1,29 @@
 #include <iostream>
 #include "machine.hpp"
 
-using namespace std;
-
 int main(int argc, char *argv[]) {
-	cout << "\nTrabalho de Organização e Arquitetura de Computadores\n";
-	cout << "Máquina Virtual RISC-V Monociclo\n";
-	cout << "Lucas Tomio Darim\n\n";
+    std::cout << "\nTrabalho de Organização e Arquitetura de Computadores\n";
+	std::cout << "Máquina Virtual RISC-V Monociclo\n";
+	std::cout << "Lucas Tomio Darim\n\n";
 
+    // Caso não tenha sido passado o arquivo de instruções
 	if(argc < 1) {
-		cout << "Modo de uso: \"./riscv instrucoes.txt\"\n";
+		std::cout << "Modo de uso: \"./riscv instrucoes.txt\"\n";
 		return 1;
 	}
 
-  Machine *machine = new Machine(argv[1]);
+    // Cria a máquina virtual
+    Machine *machine = new Machine(argv[1]);
 	char ch;
 
-	cout << "Digite n para próximo ciclo ou q para sair.";
-	cin >> ch;
+	std::cout << "Digite n para próximo ciclo ou q para sair.";
+	std::cin >> ch;
 
+    // Executa as instruções quando o usuário inseri 'n' até que o arquivo acabe ou este insira 'q'
 	while(ch != 'q') {
 		if(ch == 'n')
 			machine->clock();
-		cin >> ch;
+		std::cin >> ch;
 	}
 
   return 0;

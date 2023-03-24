@@ -1,17 +1,19 @@
 #ifndef ALUCONTROL_HPP
 #define ALUCONTROL_HPP
 
-#define IS_JR_MASK 0x08u
-
+// Unidade responsável por definir a operação que será executada pela ALU
 class ALUControl {
 private:
-  int output;
+    // Armazena o código da operação
+    int output;
 
 public:
-  ALUControl();
-  void executa(int instrucao, int aluop);
-  int getOutput();
+    // Construtor da classe
+    ALUControl();
+    // Define o código da operação a partir da instrução e do ALUOp
+    void executa(int instrucao, int aluop);
+    // Retorna o valor de output
+    int getOutput();
 };
-
 
 #endif //ALUCONTROL_HPP

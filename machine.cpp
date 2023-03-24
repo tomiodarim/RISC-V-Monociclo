@@ -1,46 +1,52 @@
 #include <iostream>
-#include <cstring>
 #include "machine.hpp"
 #include "processor.hpp"
 
-using namespace std;
-
+// Construtor da classe
 Machine::Machine(char *nomeArq) {
-  this->processor = new Processor();
-	FILE *f = fopen(nomeArq, "r");
-	
-	if (!f) exit(1);
+    // Cria o processador
+    this->processor = new Processor();
 
-	int i;
-	auto *instrucoes = (unsigned int *) (malloc(255 * sizeof(unsigned int)));
-	char buff[255];
-	int aux;
+    // Abre o arquivo com as instruções
+    FILE *f = fopen(nomeArq, "r");
+    if (!f) exit(1);
 
-	for (i = 0; !feof(f); i++) {
-		fgets(buff, 255, f);
-		instrucoes[i] = lerInstrucao(buff);
-	}
+    int i;
+    auto *instrucoes = (unsigned int *) (malloc(255 * sizeof(unsigned int)));
+    char buff[255];
+    int aux;
 
-	processor->inicializa(instrucoes);
+    // Lê e decodifica cada instrução
+    for (i = 0; !feof(f); i++) {
+        fgets(buff, 255, f);
+        instrucoes[i] = lerInstrucao(buff);
+    }
+
+    // Passa as instruções para o processador
+    processor->inicializa(instrucoes);
 }
 
+// Executa o clock
 void Machine::clock() {
-  cout << "================================================\n";
-  processor->executa();
-  cout << "------------------Registradores-----------------\n";
-  processor->printRegistradores();
-  cout << "---------------------Memoria-------------------\n";
-  processor->printMemoria();
-	cout << "-----------------------------------------------\n";
+    std::cout << "================================================\n";
+    processor->executa();
+    std::cout << "------------------Registradores-----------------\n";
+    processor->printRegistradores();
+    std::cout << "---------------------Memoria-------------------\n";
+    processor->printMemoria();
+    std::cout << "-----------------------------------------------\n";
 }
 
+// Transforma uma string em inteiro equivalente aos bits da intrução
+// Requer um vetor de caracteres formados por 1s e 0s
+// Retorna o inteiro formado por esses mesmos bits
 unsigned int Machine::lerInstrucao(const char *str) {
-  unsigned int res = 0, aux = 1u;
-  int i;
+    unsigned int res = 0, aux = 1u;
+    int i;
 
-  for (i = 31; i >= 0; --i, aux <<= 1u) {
-    res |= (str[i] - '0') ? aux : 0;
-  }
+    for (i = 31; i >= 0; --i, aux <<= 1u) {
+        res |= (str[i] - '0') ? aux : 0;
+    }
 
-  return res;
+    return res;
 }
